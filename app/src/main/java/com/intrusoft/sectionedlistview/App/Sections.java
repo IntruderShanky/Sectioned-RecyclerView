@@ -4,10 +4,6 @@ import com.intrusoft.sectionrecyclerview.SectionItem;
 
 import java.util.List;
 
-/**
- * Created by apple on 10/2/16.
- */
-
 public class Sections implements SectionItem {
 
     List<Childs> childsList;

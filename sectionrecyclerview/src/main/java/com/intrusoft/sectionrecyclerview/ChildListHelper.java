@@ -9,8 +9,7 @@ import android.widget.BaseAdapter;
 /**
  * Created by apple on 10/2/16.
  */
-
-public abstract class ChildListHelper extends BaseAdapter {
+abstract class ChildListHelper extends BaseAdapter {
 
     int numOfItems;
     Context context;
