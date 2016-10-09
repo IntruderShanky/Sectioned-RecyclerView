@@ -22,7 +22,7 @@ dependencies {
 	}
 ```
 ### Implementation
-This is very easy and simple steps.
+There are very easy and simple steps to implement.
 #####Step 1. Add RecyclerView in layout file:
 ```xml
 <android.support.v7.widget.RecyclerView
