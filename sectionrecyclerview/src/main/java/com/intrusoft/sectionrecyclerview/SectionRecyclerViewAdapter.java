@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,15 +16,16 @@ import java.util.List;
 
 public abstract class SectionRecyclerViewAdapter<SVH extends SectionViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Context context;
-    List<? extends SectionItem> sections;
-    int sectionResId;
-    int childResId;
-    RecyclerView recyclerView;
-    OnItemClickListener onItemClickListener;
-    OnSectionClickListener onSectionClickListener;
+    private Context context;
+    private List<? extends SectionItem> sections;
+    private int sectionResId;
+    private int childResId;
+    private RecyclerView recyclerView;
+    private OnItemClickListener onItemClickListener;
+    private OnSectionClickListener onSectionClickListener;
 
-    public SectionRecyclerViewAdapter(Context context, List<? extends SectionItem> sections, RecyclerView recyclerView, int sectionResId, int childResId) {
+    public SectionRecyclerViewAdapter(Context context, List<? extends SectionItem> sections,
+                                      RecyclerView recyclerView, int sectionResId, int childResId) {
         this.context = context;
         this.sections = sections;
         this.sectionResId = sectionResId;
@@ -36,47 +36,59 @@ public abstract class SectionRecyclerViewAdapter<SVH extends SectionViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LinearLayout fullSectionView = new LinearLayout(context);
-        fullSectionView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        fullSectionView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
         fullSectionView.setOrientation(LinearLayout.VERTICAL);
 
         View sectionView = LayoutInflater.from(context).inflate(sectionResId, null);
         fullSectionView.addView(sectionView);
 
         ChildListView childs = new ChildListView(context);
-        childs.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        childs.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
         fullSectionView.addView(childs);
+
         return onCreateSectionViewHolder(fullSectionView, sectionView, childs);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder == null){
-            Toast.makeText(context, "NULL HOLDER", Toast.LENGTH_SHORT).show();
-        }
+
+        //Better not show to user toasts like this
+//        if (holder == null) {
+//            Toast.makeText(context, "NULL HOLDER", Toast.LENGTH_SHORT).show();
+//        }
+
         final SVH sectionViewHolder = (SVH) holder;
-        if(sectionViewHolder.childs != null) {
-            ChildListView childListView = (ChildListView) sectionViewHolder.childs;
-            childListView.setAdapter(new ChildListHelper(sections.get(position).getChildItems().size(), context, childResId) {
-                @Override
-                public View onChildCreateView(int p, View childView) {
-                    Object childItem = sections.get(position).getChildItems().get(p);
-                    return onBindChildView(p, childView, childItem);
-                }
-            });
+
+        if (sectionViewHolder.getChilds() != null) {
+            ChildListView childListView = (ChildListView) sectionViewHolder.getChilds();
+            childListView.setAdapter(
+                    new ChildListHelper(sections.get(position).getChildItems().size(), context, childResId) {
+                        @Override
+                        public View onChildCreateView(int p, View childView) {
+                            Object childItem = sections.get(position).getChildItems().get(p);
+                            return onBindChildView(p, childView, childItem);
+                        }
+                    });
+
             childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
-                    if(onItemClickListener!=null)
+                    if (onItemClickListener != null)
                         onItemClickListener.onItemClick(position, p);
                 }
             });
         }
+
         onBindSectionView((SVH) holder, position, sections.get(position));
-        sectionViewHolder.sectionView.setOnClickListener(new View.OnClickListener() {
+
+        sectionViewHolder.getSectionView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recyclerView.scrollToPosition(position);
-                if(onSectionClickListener!=null)
+                if (onSectionClickListener != null)
                     onSectionClickListener.onSectionClick(position);
             }
         });
@@ -101,11 +113,11 @@ public abstract class SectionRecyclerViewAdapter<SVH extends SectionViewHolder> 
         this.onSectionClickListener = onSectionClickListener;
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int sectionPosition, int itemPosition);
     }
 
-    public interface OnSectionClickListener{
+    public interface OnSectionClickListener {
         void onSectionClick(int position);
     }
 }

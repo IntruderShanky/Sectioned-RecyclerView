@@ -11,9 +11,9 @@ import android.widget.BaseAdapter;
  */
 abstract class ChildListHelper extends BaseAdapter {
 
-    int numOfItems;
-    Context context;
-    int resId;
+    private int numOfItems;
+    private Context context;
+    private int resId;
 
     public ChildListHelper(int numOfItems, Context context, int resId) {
         this.numOfItems = numOfItems;

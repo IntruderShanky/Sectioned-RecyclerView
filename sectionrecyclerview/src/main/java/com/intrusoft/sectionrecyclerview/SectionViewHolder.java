@@ -9,8 +9,16 @@ import android.view.View;
 
 public class SectionViewHolder extends RecyclerView.ViewHolder {
 
-    View childs;
-    View sectionView;
+    public View getChilds() {
+        return childs;
+    }
+
+    public View getSectionView() {
+        return sectionView;
+    }
+
+    private View childs;
+    private View sectionView;
 
     public SectionViewHolder(View fullSectionView, View sectionView, View child) {
         super(fullSectionView);
