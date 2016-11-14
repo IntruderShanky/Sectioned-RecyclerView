@@ -244,14 +244,15 @@ public class MainActivity extends AppCompatActivity {
 ```
 
 
-#Data Change Methods
+Data Change Methods
+---------
 ```java
 insertNewSection(Section)
 insertNewSection(Section, int)
 removeSection(int)
-insertNewChild(Object, int)}
-insertNewChild(Object, int, int)}
-removeChild(int, int)}
+insertNewChild(Object, int)
+insertNewChild(Object, int, int)
+removeChild(int, int)
 ```
 
 Licence
