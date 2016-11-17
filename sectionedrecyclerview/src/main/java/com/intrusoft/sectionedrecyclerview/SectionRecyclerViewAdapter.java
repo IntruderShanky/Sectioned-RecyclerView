@@ -18,6 +18,7 @@ import java.util.List;
  * {@link #insertNewChild(Object, int)}
  * {@link #insertNewChild(Object, int, int)}
  * {@link #removeChild(int, int)}
+ * {@link #notifyDataChanged(List)}
  * methods and not the notify methods of RecyclerView.Adapter.
  */
 public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
@@ -78,7 +79,7 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
      * {@link #onBindSectionViewHolder(RecyclerView.ViewHolder, int, Section)} or
      * {@link #onBindChildViewHolder(RecyclerView.ViewHolder, int, int, Object)}.
      *
-     * @param holder The RecyclerView.ViewHolder to bind data to
+     * @param holder       The RecyclerView.ViewHolder to bind data to
      * @param flatPosition The index in the merged list of children and parents at which to bind
      */
     @Override
@@ -102,7 +103,7 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
      * the list item created is a section.
      *
      * @param sectionViewGroup The {@link ViewGroup} in the list for which a {@link SVH} is being
-     *                        created
+     *                         created
      * @return A {@code SVH} corresponding to the parent with the {@code ViewGroup} parentViewGroup
      */
     public abstract SVH onCreateSectionViewHolder(ViewGroup sectionViewGroup, int viewType);
@@ -124,8 +125,8 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
      * Bind data to the {@link SVH} here.
      *
      * @param sectionViewHolder The {@code SVH} to bind data to
-     * @param sectionPosition The position of the parent to bind
-     * @param section The parent which holds the data to be bound to the {@code SVH}
+     * @param sectionPosition   The position of the parent to bind
+     * @param section           The parent which holds the data to be bound to the {@code SVH}
      */
     public abstract void onBindSectionViewHolder(SVH sectionViewHolder, int sectionPosition, S section);
 
@@ -137,8 +138,8 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
      *
      * @param childViewHolder The {@code CVH} to bind data to
      * @param sectionPosition The position of the parent that contains the child to bind
-     * @param childPosition The position of the child to bind
-     * @param child The child which holds that data to be bound to the {@code CVH}
+     * @param childPosition   The position of the child to bind
+     * @param child           The child which holds that data to be bound to the {@code CVH}
      */
     public abstract void onBindChildViewHolder(CVH childViewHolder, int sectionPosition, int childPosition, C child);
 
@@ -157,7 +158,7 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
      * Generates a full list of all sections and their children, in order.
      *
      * @param sectionItemList A list of the sections from
-     *                   the {@link SectionRecyclerViewAdapter}
+     *                        the {@link SectionRecyclerViewAdapter}
      * @return A list of all sections and their children
      */
     private List<SectionWrapper<S, C>> generateFlatItemList(List<S> sectionItemList) {
@@ -191,18 +192,14 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
     public void insertNewSection(S section, int sectionPosition) {
         if (sectionPosition > sectionItemList.size() || sectionPosition < 0)
             throw new IndexOutOfBoundsException("sectionPosition =  " + sectionPosition + " , Size is " + sectionItemList.size());
-        flatItemList = new ArrayList<>();
-        flatItemList = generateFlatItemList(sectionItemList);
-        notifyDataSetChanged();
+        notifyDataChanged(sectionItemList);
     }
 
     public void removeSection(int sectionPosition) {
         if (sectionPosition > sectionItemList.size() - 1 || sectionPosition < 0)
             throw new IndexOutOfBoundsException("sectionPosition =  " + sectionPosition + " , Size is " + sectionItemList.size());
         sectionItemList.remove(sectionPosition);
-        flatItemList = new ArrayList<>();
-        flatItemList = generateFlatItemList(sectionItemList);
-        notifyDataSetChanged();
+        notifyDataChanged(sectionItemList);
     }
 
     public void insertNewChild(C child, int sectionPosition) {
@@ -217,9 +214,7 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
         if (childPosition > sectionItemList.get(sectionPosition).getChildItems().size() || childPosition < 0)
             throw new IndexOutOfBoundsException("Invalid childPosition =  " + childPosition + " , Size is " + sectionItemList.get(sectionPosition).getChildItems().size());
         sectionItemList.get(sectionPosition).getChildItems().add(childPosition, child);
-        flatItemList = new ArrayList<>();
-        flatItemList = generateFlatItemList(sectionItemList);
-        notifyDataSetChanged();
+        notifyDataChanged(sectionItemList);
     }
 
     public void removeChild(int sectionPosition, int childPosition) {
@@ -228,6 +223,10 @@ public abstract class SectionRecyclerViewAdapter<S extends Section<C>, C, SVH ex
         if (childPosition > sectionItemList.get(sectionPosition).getChildItems().size() - 1 || childPosition < 0)
             throw new IndexOutOfBoundsException("Invalid childPosition =  " + childPosition + " , Size is " + sectionItemList.get(sectionPosition).getChildItems().size());
         sectionItemList.get(sectionPosition).getChildItems().remove(childPosition);
+        notifyDataChanged(sectionItemList);
+    }
+
+    public void notifyDataChanged(List<S> sectionItemList) {
         flatItemList = new ArrayList<>();
         flatItemList = generateFlatItemList(sectionItemList);
         notifyDataSetChanged();

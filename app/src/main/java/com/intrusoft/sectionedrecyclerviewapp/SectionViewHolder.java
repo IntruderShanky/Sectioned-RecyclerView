@@ -13,6 +13,6 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     TextView name;
     public SectionViewHolder(View itemView) {
         super(itemView);
-         name = (TextView) itemView.findViewById(R.id.section);
+         name = (TextView) itemView.findViewById(R.id.sectionHeader);
     }
 }

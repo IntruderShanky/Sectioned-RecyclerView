@@ -26,7 +26,7 @@ allprojects {
 #####Step 2. Add the dependency
 ```groovy
 dependencies {
-	        compile 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.0'
+	        compile 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.1'
 	}
 ```
 ### Implementation
@@ -253,6 +253,12 @@ removeSection(int)
 insertNewChild(Object, int)
 insertNewChild(Object, int, int)
 removeChild(int, int)
+
+/* To notify the adapter for data change 
+ * call notifyDataChanged(List) instead of 
+ * notiftDatasetChanged()
+ */ 
+notifyDataChanged(List)
 ```
 
 Licence
