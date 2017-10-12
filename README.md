@@ -13,32 +13,32 @@ Easy implementation of RecyclerView with headers and items
 ![gif](demo.gif)
 
 ### Usage
-#####Step 1. Add the JitPack repository to your build file
-######Add it in your root build.gradle at the end of repositories:
+##### Step 1. Add the JitPack repository to your build file
+###### Add it in your root build.gradle at the end of repositories:
 ```groovy
 allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
-	}
+   repositories {
+	...
+	maven { url "https://jitpack.io" }
+   }
+}
 ```
-#####Step 2. Add the dependency
+##### Step 2. Add the dependency
 ```groovy
 dependencies {
-	        compile 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.1'
-	}
+   compile 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.1'
+}
 ```
 ### Implementation
 There are very easy and simple steps to implement.
-#####Step 1. Add RecyclerView in layout file:
+##### Step 1. Add RecyclerView in layout file:
 ```xml
 <android.support.v7.widget.RecyclerView
    android:id="@+id/recycler_view"
    android:layout_width="match_parent"
    android:layout_height="wrap_content" />
 ```
-#####Step 2. Create another layout file for Section Header:
+##### Step 2. Create another layout file for Section Header:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -64,7 +64,7 @@ There are very easy and simple steps to implement.
 </LinearLayout>
 ```
 
-#####Step 3. Create another layout file for Section Child:
+##### Step 3. Create another layout file for Section Child:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -85,7 +85,7 @@ There are very easy and simple steps to implement.
 </LinearLayout>
 ```
 
-#####Step 4. Create a class for Section Child and named it. Here "Child.java"
+##### Step 4. Create a class for Section Child and named it. Here "Child.java"
 ```java
 public class Child {
 
@@ -101,7 +101,7 @@ public class Child {
 }
 ```
 
-#####Step 5. Create a class for Section Header and implement it with Section. Here "Section.java"
+##### Step 5. Create a class for Section Header and implement it with Section. Here "Section.java"
 ```java
 public class SectionHeader implements Section<Child> {
 
@@ -124,7 +124,7 @@ public class SectionHeader implements Section<Child> {
 }
 ```
 
-#####Step 6. Create a two ViewHolder classes to hold the views of section and child.
+##### Step 6. Create a two ViewHolder classes to hold the views of section and child.
 ```java
 public class SectionViewHolder extends RecyclerView.ViewHolder {
 
@@ -147,7 +147,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
 }
 ```
 
-#####Step 7. Create a Adater for RecyclerView. Here "AdapterSectionRecycler.java"
+##### Step 7. Create a Adater for RecyclerView. Here "AdapterSectionRecycler.java"
 ```java
 public class AdapterSectionRecycler extends SectionRecyclerViewAdapter<Section, Child, SectionViewHolder, ChildViewHolder> {
 
@@ -182,7 +182,7 @@ public class AdapterSectionRecycler extends SectionRecyclerViewAdapter<Section, 
 }
 ```
 
-#####Step 8. Here complete code of your Activity Class, Here "MainActivity.java"
+##### Step 8. Here complete code of your Activity Class, Here "MainActivity.java"
 ```java
 public class MainActivity extends AppCompatActivity {
 
