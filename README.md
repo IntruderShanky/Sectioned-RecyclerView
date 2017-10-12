@@ -149,11 +149,11 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
 
 ##### Step 7. Create a Adater for RecyclerView. Here "AdapterSectionRecycler.java"
 ```java
-public class AdapterSectionRecycler extends SectionRecyclerViewAdapter<Section, Child, SectionViewHolder, ChildViewHolder> {
+public class AdapterSectionRecycler extends SectionRecyclerViewAdapter<SectionHeader, Child, SectionViewHolder, ChildViewHolder> {
 
     Context context;
 
-    public AdapterSectionRecycler(Context context, List<Section> sectionItemList) {
+    public AdapterSectionRecycler(Context context, List<SectionHeader> sectionItemList) {
         super(context, sectionItemList);
         this.context = context;
     }
@@ -171,7 +171,7 @@ public class AdapterSectionRecycler extends SectionRecyclerViewAdapter<Section, 
     }
 
     @Override
-    public void onBindSectionViewHolder(SectionViewHolder sectionViewHolder, int sectionPosition, Section section) {
+    public void onBindSectionViewHolder(SectionViewHolder sectionViewHolder, int sectionPosition, SectionHeader section) {
         sectionViewHolder.name.setText(section.sectionText);
     }
 
@@ -210,32 +210,32 @@ public class MainActivity extends AppCompatActivity {
         childList.add(new Child("Aakash"));
 
         //Create a List of Section DataModel implements Section
-        List<Section> sections = new ArrayList<>();
-        sections.add(new Section(childList, "A"));
+        List<SectionHeader> sections = new ArrayList<>();
+        sections.add(new SectionHeader(childList, "A"));
 
         childList = new ArrayList<>();
         childList.add(new Child("Bill Gates"));
         childList.add(new Child("Bob Proctor"));
         childList.add(new Child("Bryan Tracy"));
-        sections.add(new Section(childList, "B"));
+        sections.add(new SectionHeader(childList, "B"));
 
         childList = new ArrayList<>();
         childList.add(new Child("Intruder Shanky"));
         childList.add(new Child("Invincible Vinod"));
-        sections.add(new Section(childList, "I"));
+        sections.add(new SectionHeader(childList, "I"));
 
         childList = new ArrayList<>();
         childList.add(new Child("Jim Carry"));
-        sections.add(new Section(childList, "J"));
+        sections.add(new SectionHeader(childList, "J"));
 
         childList = new ArrayList<>();
         childList.add(new Child("Neil Patrick Harris"));
-        sections.add(new Section(childList, "N"));
+        sections.add(new SectionHeader(childList, "N"));
 
         childList = new ArrayList<>();
         childList.add(new Child("Orange"));
         childList.add(new Child("Olive"));
-        sections.add(new Section(childList, "O"));
+        sections.add(new SectionHeader(childList, "O"));
 
         adapterRecycler = new AdapterSectionRecycler(this, sections);
         recyclerView.setAdapter(adapterRecycler);
